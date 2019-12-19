@@ -1,0 +1,25 @@
+{
+  "name": "react-native-rn-inka-element",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "react-native",
+    "inka",
+    "element",
+    "modal",
+    "popup"
+  ],
+  "bugs": {
+    "url": "https://github.com/react-native-training/react-native-elements/issues"
+  },
+  "author": "Andrew",
+  "license": "MIT",
+  "peerDependencies": {
+    "react-native": "^0.41.2",
+    "react-native-windows": "0.41.0-rc.1"
+  }
+}
