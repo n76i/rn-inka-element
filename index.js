@@ -1,6 +1,3 @@
+import Test from './src/modal/Test';
 
-import { NativeModules } from 'react-native';
-
-const { RNRnInkaElement } = NativeModules;
-
-export default RNRnInkaElement;
+export default Test;

@@ -1,5 +1,5 @@
 {
-  "name": "react-native-rn-inka-element",
+  "name": "rn-inka-element",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -14,12 +14,17 @@
     "popup"
   ],
   "bugs": {
-    "url": "https://github.com/react-native-training/react-native-elements/issues"
+    "url": "https://github.com/n76i/rn-inka-element"
   },
   "author": "Andrew",
   "license": "MIT",
   "peerDependencies": {
-    "react-native": "^0.41.2",
-    "react-native-windows": "0.41.0-rc.1"
+    "react-native": "^0.41.2"
+  },
+  "dependencies": {
+    "react": "^16.12.0"
+  },
+  "devDependencies": {
+    "@types/node": "^12.12.21"
   }
 }
