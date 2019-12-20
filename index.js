@@ -1,3 +1,3 @@
-import Test from './src/modal/Test';
+import ModalNumberPad from './src/modal/ModalNumberPad';
 
-export default Test;
+export { ModalNumberPad };

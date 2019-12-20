@@ -1,11 +1,12 @@
 import React from 'react';
 
-export interface TestProps {
-    prop1: boolean;
-    prop2?: string;
-    prop3?: string;
+export interface ModalNumberPadProps {
+    /** Use this prop when have input inside this modal */
+    keyboardHeight: number,
+    onSwipeDown?(): void,
+    visible: boolean,
+    /** This function use help this modal can close when click cancel,... */
+    onRequestClose(): void
 }
 
-declare const Test: React.SFC<TestProps>
-
-export default Test
+export class ModalNumberPad extends React.Component<ModalNumberPadProps, any> {}
