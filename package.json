@@ -1,10 +1,47 @@
 {
-  "name": "rn-inka-element",
-  "version": "1.0.3",
-  "description": "",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+  "_from": "rn-inka-element@^1.0.2",
+  "_id": "rn-inka-element@1.0.3",
+  "_inBundle": false,
+  "_integrity": "sha512-xsdDMCK0w69dpqqQEbytc6BXXc5BodlUUUhzuKijryT8o4XsDe+BZ3IQMehHLIfZ1MxDzDghufXnl2QsFkOetg==",
+  "_location": "/rn-inka-element",
+  "_phantomChildren": {
+    "loose-envify": "1.4.0",
+    "object-assign": "4.1.1",
+    "prop-types": "15.7.2"
+  },
+  "_requested": {
+    "type": "range",
+    "registry": true,
+    "raw": "rn-inka-element@^1.0.2",
+    "name": "rn-inka-element",
+    "escapedName": "rn-inka-element",
+    "rawSpec": "^1.0.2",
+    "saveSpec": null,
+    "fetchSpec": "^1.0.2"
+  },
+  "_requiredBy": [
+    "#USER",
+    "/"
+  ],
+  "_resolved": "https://registry.npmjs.org/rn-inka-element/-/rn-inka-element-1.0.3.tgz",
+  "_shasum": "9d915c36b458f0e7832de03f2b505eac4aaaa57d",
+  "_spec": "rn-inka-element@^1.0.2",
+  "_where": "/Users/andrew/Desktop/inka-crm/CRMInka",
+  "author": {
+    "name": "Andrew"
+  },
+  "bugs": {
+    "url": "https://github.com/n76i/rn-inka-element"
+  },
+  "bundleDependencies": false,
+  "dependencies": {
+    "react": "^16.12.0"
+  },
+  "deprecated": false,
+  "description": "## Getting started",
+  "devDependencies": {
+    "@types/node": "^12.12.21",
+    "react-native-vector-icons": "^6.0.2"
   },
   "keywords": [
     "react-native",
@@ -13,19 +50,14 @@
     "modal",
     "popup"
   ],
-  "bugs": {
-    "url": "https://github.com/n76i/rn-inka-element"
-  },
-  "author": "Andrew",
   "license": "MIT",
+  "main": "index.js",
+  "name": "rn-inka-element",
   "peerDependencies": {
     "react-native": "^0.41.2"
   },
-  "dependencies": {
-    "react": "^16.12.0"
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "devDependencies": {
-    "@types/node": "^12.12.21",
-    "react-native-vector-icons": "^6.0.2"
-  }
+  "version": "1.0.3"
 }

@@ -26,8 +26,7 @@ export default class ModalNumberPad extends Component {
         [{ value: '4', action: '4' }, { value: '5', action: '5' }, { value: '6', action: '6' }],
         [{ value: '7', action: '7' }, { value: '8', action: '8' }, { value: '9', action: '9' }],
         [{ value: '.000', action: '.000' }, { value: '0', action: '0' }, { value: 'DEL', action: 'del' }],
-      ],
-      modal_number_data: '0'
+      ]
     }
   }
 
@@ -35,10 +34,13 @@ export default class ModalNumberPad extends Component {
     if (!this.props.onRequestClose) {
       console.warn('You must declare onRequestClose function to control this modal, if no it can not close by itself')
     }
+    if (!this.props.value) {
+      console.warn('Pass the value to this component');
+    }
   }
 
   onNumberKeyPress(action) {
-    let data = this.state.modal_number_data.toString().split(' ').join('');
+    let data = this.props.value.toString().split(' ').join('');
 
     switch (action) {
       case '0':
@@ -67,7 +69,7 @@ export default class ModalNumberPad extends Component {
     if (parseInt(data) > 999999999999) {
       data = '999999999999';
     }
-    this.setState({ modal_number_data: data.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ") });
+    !this.props.onValueChange || this.props.onValueChange(data.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " "));
   }
 
   render() {
@@ -78,7 +80,8 @@ export default class ModalNumberPad extends Component {
       onRequestClose,
       onBackgroundPress,
       onConfirm,
-      onCancel
+      onCancel,
+      value
     } = this.props;
     const keyboard = this.state.keyboard;
 
@@ -173,9 +176,9 @@ export default class ModalNumberPad extends Component {
                           paddingLeft: 38
                         }}>
                           <TouchableOpacity style={styles.modal_datetime_block_container} onPress={() => { }}>
-                            <Text style={[styles.modal_datetime_block_text1, { color: '#0377fc' }]}>{this.state.modal_number_data}</Text>
+                            <Text style={[styles.modal_datetime_block_text1, { color: '#0377fc' }]}>{value}</Text>
                           </TouchableOpacity>
-                          <TouchableOpacity style={{ paddingVertical: 4, paddingHorizontal: 10 }} onPress={() => { this.setState({ modal_number_data: '0' }) }}>
+                          <TouchableOpacity style={{ paddingVertical: 4, paddingHorizontal: 10 }} onPress={() => !this.props.onValueChange || this.props.onValueChange('0')}>
                             <Ionicon
                               name='ios-close-circle'
                               color='#ababab'
@@ -200,9 +203,11 @@ export default class ModalNumberPad extends Component {
                         style={[styles.modal_button, { marginBottom: 1 }]}
                         onPress={() => {
                           if (onConfirm) {
-                            onConfirm(this.state.modal_number_data);
+                            const value = this.props.value.toString().split(' ').join('');
+                            onConfirm(parseInt(value));
                           }
-                          !onRequestClose || onRequestClose()
+                          !onRequestClose || onRequestClose();
+                          !this.props.onValueChange || this.props.onValueChange('0');
                         }}>
                         <Text style={{ color: '#0377fc', fontSize: 18 }} allowFontScaling={false}>OK</Text>
                       </TouchableOpacity>
@@ -210,9 +215,10 @@ export default class ModalNumberPad extends Component {
                         style={[styles.modal_button]}
                         onPress={() => {
                           if (onCancel) {
-                            onCancel(this.state.modal_number_data);
+                            onCancel();
                           }
-                          !onRequestClose || onRequestClose()
+                          !onRequestClose || onRequestClose();
+                          !this.props.onValueChange || this.props.onValueChange('0');
                         }}>
                         <Text style={{ color: '#0377fc', fontSize: 18 }} allowFontScaling={false}>Cancel</Text>
                       </TouchableOpacity>

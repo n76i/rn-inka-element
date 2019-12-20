@@ -5,9 +5,13 @@ export interface ModalNumberPadProps {
     keyboardHeight: number,
     onSwipeDown?(): void,
     visible: boolean,
-    /** This function use help this modal can close when click cancel,... */
+    /** This function use help this modal can close when click cancel, ok, outside */
     onRequestClose(): void,
-    onConfirm(data):void,
+    /**
+     * Callback function when user press OK
+     * @param value Number user have typed
+     */
+    onConfirm(value: number):void,
     onCancel():void
 }
 
