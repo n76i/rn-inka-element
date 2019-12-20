@@ -17,7 +17,11 @@ import { ModalNumberPad } from 'rn-inka-element';
 <ModalNumberPad
  onRequestClose={() => {
  // should close modal here
+ modal_number_visible = false;
  }}
- visible={modal_number_visible} />
+ onConfirm={value => console.log(value)}
+ value={{/* Store value in state, redux, mobx,... */}}
+ onValueChange={value => {/* Update value */}}
+ visible={modal_number_visible}/>
 ```
   
