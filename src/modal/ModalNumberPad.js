@@ -198,12 +198,22 @@ export default class ModalNumberPad extends Component {
                       </View>
                       <TouchableOpacity
                         style={[styles.modal_button, { marginBottom: 1 }]}
-                        onPress={() => !onRequestClose || onRequestClose()}>
+                        onPress={() => {
+                          if (onConfirm) {
+                            onConfirm(this.state.modal_number_data);
+                          }
+                          !onRequestClose || onRequestClose()
+                        }}>
                         <Text style={{ color: '#0377fc', fontSize: 18 }} allowFontScaling={false}>OK</Text>
                       </TouchableOpacity>
                       <TouchableOpacity
                         style={[styles.modal_button]}
-                        onPress={() => !onRequestClose || onRequestClose()}>
+                        onPress={() => {
+                          if (onCancel) {
+                            onCancel(this.state.modal_number_data);
+                          }
+                          !onRequestClose || onRequestClose()
+                        }}>
                         <Text style={{ color: '#0377fc', fontSize: 18 }} allowFontScaling={false}>Cancel</Text>
                       </TouchableOpacity>
                     </View>

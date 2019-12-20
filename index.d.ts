@@ -6,7 +6,9 @@ export interface ModalNumberPadProps {
     onSwipeDown?(): void,
     visible: boolean,
     /** This function use help this modal can close when click cancel,... */
-    onRequestClose(): void
+    onRequestClose(): void,
+    onConfirm(data):void,
+    onCancel():void
 }
 
 export class ModalNumberPad extends React.Component<ModalNumberPadProps, any> {}
