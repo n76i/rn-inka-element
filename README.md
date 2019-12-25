@@ -81,4 +81,21 @@ import { ModalBottomSheet } from 'rn-inka-element';
   )}
   visible={modal_option_visible} />
 ```
+
+Props:
+
+
+|Prop | Support | Description |
+| --- | ---- | ----------- |
+|keyboardHeight  | iOS/Android |Use this prop when have input inside this modal|
+|onConfirm       | iOS/Android |On OK button press, note that if you def this props, a default button OK will render|
+|onCancel        | iOS/Android |On cancel button press, note that if you def this props, a default button Cancel will render|
+|onSwipeDown     | iOS         |Work on iOS only, handle event when use swipe modal down. This event use over scroll of scroll view|
+|onSwipeUp       | iOS         |Work on iOS only, handle event when use swipe modal up. This event use over scroll of scroll view|
+|visible         | iOS/Android |Important prop to control modal visible|
+|onRequestClose  | iOS/Android |This function use help this modal can close when click cancel, ok, outside|
+|renderHeader    | iOS/Android |Override render header of BottomSheet|
+|renderContent   | iOS/Android |Render content of BottomSheet|
+|enableScroll    | iOS/Android |Enable scroll content if higher than screen |
+|lang            | iOS/Android |Use this prop for multiple language|
   
