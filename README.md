@@ -40,6 +40,17 @@ import { ModalNumberPad } from 'rn-inka-element';
   valueInit={1104}
   visible={modal_number_visible} />
 ```
+
+
+Props:
+
+
+|Prop | Support | Description |
+| --- | ---- | ----------- |
+|onValueChange  | iOS/Android |Callback function to receive new value of number pad. You need change your store value here to update value to number pad|
+|valueInit  | iOS/Android |Default value will display on pad|
+|onConfirm  | iOS/Android |Callback function when user press OK, note that if you def this props, a default button OK will render, callback param will be the number you need|
+
 # ModalDateTime
 ```javascript
 import { ModalDateTime } from 'rn-inka-element';
@@ -57,6 +68,16 @@ import { ModalDateTime } from 'rn-inka-element';
   }}
   />
 ```
+
+
+Props:
+
+
+|Prop | Support | Description |
+| --- | ---- | ----------- |
+|dateInit  | iOS/Android |Default value will display on pad|
+|onConfirm  | iOS/Android |Callback function when user press OK, note that if you def this props, a default button OK will render, callback param will be the moment you choosed|
+
 # ModalBottomSheet
 Other Modal is base on this component
 ```javascript
@@ -89,7 +110,7 @@ Props:
 | --- | ---- | ----------- |
 |keyboardHeight  | iOS/Android |Use this prop when have input inside this modal|
 |onConfirm       | iOS/Android |On OK button press, note that if you def this props, a default button OK will render|
-|onCancel        | iOS/Android |On cancel button press, note that if you def this props, a default button Cancel will render|
+|onCancel        | iOS/Android |On Cancel button press, note that if you def this props, a default button Cancel will render|
 |onSwipeDown     | iOS         |Work on iOS only, handle event when use swipe modal down. This event use over scroll of scroll view|
 |onSwipeUp       | iOS         |Work on iOS only, handle event when use swipe modal up. This event use over scroll of scroll view|
 |visible         | iOS/Android |Important prop to control modal visible|
