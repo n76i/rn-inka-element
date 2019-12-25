@@ -15,13 +15,19 @@ import { ModalNumberPad } from 'rn-inka-element';
 
 // Use Modal Number Pad
 <ModalNumberPad
- onRequestClose={() => {
- // should close modal here
- modal_number_visible = false;
- }}
- onConfirm={value => console.log(value)}
- value={{/* Store value in state, redux, mobx,... */}}
- onValueChange={value => {/* Update value */}}
- visible={modal_number_visible}/>
+  onRequestClose={() => modal_number_visible = false}
+  onConfirm={value => {
+    console.log(value);
+    modal_number_visible = false;
+  }}
+  onCancel={() => modal_number_visible = false}
+  lang={{
+    title_thin: 'Choose ',
+    title_bold: '"Product Price"',
+    button_ok: 'OK',
+    button_cancel: 'Cancel',
+  }}
+  valueInit={1104}
+  visible={modal_number_visible} />
 ```
   
