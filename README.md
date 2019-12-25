@@ -24,6 +24,9 @@ You need install react-native-vector-icons for ModalNumberPad
 
 ## Usage
 ### ModalNumberPad
+
+<img src="https://raw.githubusercontent.com/n76i/rn-inka-element/master/numberpad.png" width="320">
+
 ```javascript
 import { ModalNumberPad } from 'rn-inka-element';
 
@@ -56,6 +59,9 @@ import { ModalNumberPad } from 'rn-inka-element';
 |onConfirm  | iOS/Android |Callback function when user press OK, note that if you def this props, a default button OK will render, callback param will be the number you need|
 
 ### ModalDateTime
+
+<img src="https://raw.githubusercontent.com/n76i/rn-inka-element/master/datetime.png" width="320">
+
 ```javascript
 import { ModalDateTime } from 'rn-inka-element';
 
