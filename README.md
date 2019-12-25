@@ -7,11 +7,13 @@
 
 `$ npm install rn-inka-element --save`
 
-## REQUIRE
+## Require
 You need install moment for ModalDateTime
+
 `$ npm install moment --save`
 
 You need install react-native-vector-icons for ModalNumberPad
+
 `$ npm install react-native-vector-icons --save`
 
 ### Mostly automatic installation
@@ -19,7 +21,7 @@ You need install react-native-vector-icons for ModalNumberPad
 `$ react-native link rn-inka-element`
 
 ## Usage
-# ModalNumberPad
+### ModalNumberPad
 ```javascript
 import { ModalNumberPad } from 'rn-inka-element';
 
@@ -42,7 +44,7 @@ import { ModalNumberPad } from 'rn-inka-element';
 ```
 
 
-Props:
+#### Props:
 
 
 |Prop | Support | Description |
@@ -51,7 +53,7 @@ Props:
 |valueInit  | iOS/Android |Default value will display on pad|
 |onConfirm  | iOS/Android |Callback function when user press OK, note that if you def this props, a default button OK will render, callback param will be the number you need|
 
-# ModalDateTime
+### ModalDateTime
 ```javascript
 import { ModalDateTime } from 'rn-inka-element';
 
@@ -70,7 +72,7 @@ import { ModalDateTime } from 'rn-inka-element';
 ```
 
 
-Props:
+#### Props:
 
 
 |Prop | Support | Description |
@@ -78,7 +80,7 @@ Props:
 |dateInit  | iOS/Android |Default value will display on pad|
 |onConfirm  | iOS/Android |Callback function when user press OK, note that if you def this props, a default button OK will render, callback param will be the moment you choosed|
 
-# ModalBottomSheet
+### ModalBottomSheet
 Other Modal is base on this component
 ```javascript
 import { ModalBottomSheet } from 'rn-inka-element';
@@ -103,7 +105,7 @@ import { ModalBottomSheet } from 'rn-inka-element';
   visible={modal_option_visible} />
 ```
 
-Props:
+#### Props:
 
 
 |Prop | Support | Description |
