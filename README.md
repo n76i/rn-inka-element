@@ -1,6 +1,8 @@
 
 # rn-inka-element
 
+[![npm version](https://img.shields.io/npm/v/rn-inka-element.svg?style=flat-square)](https://www.npmjs.com/package/rn-inka-element) <a href="https://david-dm.org/beefe/rn-inka-element"><img src="https://david-dm.org/beefe/rn-inka-element.svg?style=flat-square" alt="dependency status"></a>   
+
 ## Getting started
 
 `$ npm install rn-inka-element --save`
@@ -8,6 +10,7 @@
 ## REQUIRE
 You need install moment for ModalDateTime
 `$ npm install moment --save`
+
 You need install react-native-vector-icons for ModalNumberPad
 `$ npm install react-native-vector-icons --save`
 
