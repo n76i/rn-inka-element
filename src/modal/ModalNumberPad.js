@@ -13,20 +13,19 @@ import {
   KeyboardAvoidingView
 } from 'react-native';
 import Ionicon from 'react-native-vector-icons/Ionicons';
+import { ModalBottomSheet } from 'rn-inka-element';
 
 export default class ModalNumberPad extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      scrollview: null,
-      scrollDirection: 1,
-      scrollCurrentOffset: 0,
       keyboard: [
         [{ value: '1', action: '1' }, { value: '2', action: '2' }, { value: '3', action: '3' }],
         [{ value: '4', action: '4' }, { value: '5', action: '5' }, { value: '6', action: '6' }],
         [{ value: '7', action: '7' }, { value: '8', action: '8' }, { value: '9', action: '9' }],
         [{ value: '.000', action: '.000' }, { value: '0', action: '0' }, { value: 'DEL', action: 'del' }],
-      ]
+      ],
+      value: '0'
     }
   }
 
@@ -34,13 +33,23 @@ export default class ModalNumberPad extends Component {
     if (!this.props.onRequestClose) {
       console.warn('You must declare onRequestClose function to control this modal, if no it can not close by itself')
     }
-    if (!this.props.value) {
-      console.warn('Pass the value to this component');
+    this.resetInitNumber();
+  }
+
+  UNSAFE_componentWillReceiveProps(nextProps) {
+    this.resetInitNumber();
+  }
+
+  resetInitNumber() {
+    if (this.props.valueInit) {
+      this.setState({ value: this.props.valueInit.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ") })
+    } else {
+      this.setState({ value: '0' })
     }
   }
 
   onNumberKeyPress(action) {
-    let data = this.props.value.toString().split(' ').join('');
+    let data = this.state.value.toString().split(' ').join('');
 
     switch (action) {
       case '0':
@@ -69,7 +78,9 @@ export default class ModalNumberPad extends Component {
     if (parseInt(data) > 999999999999) {
       data = '999999999999';
     }
-    !this.props.onValueChange || this.props.onValueChange(data.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " "));
+    const value = data.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ");
+    !this.props.onValueChange || this.props.onValueChange(value);
+    this.setState({ value: value })
   }
 
   render() {
@@ -81,155 +92,55 @@ export default class ModalNumberPad extends Component {
       onBackgroundPress,
       onConfirm,
       onCancel,
-      value
     } = this.props;
     const keyboard = this.state.keyboard;
 
     return (
-      <Modal
-        animationType="fade"
-        transparent={true}
-        visible={visible}
-        onRequestClose={() => !onRequestClose || onRequestClose()}>
-        <TouchableWithoutFeedback onPress={() => { }}>
-          <ScrollView
-            style={{
-              backgroundColor: '#00000077',
-            }}
-            onScrollBeginDrag={() => {
-
-            }}
-            ref={ref => {
-              !this.state.scrollview || this.setState({ scrollview: ref })
-            }}
-            onScroll={event => {
-              let currentOffset = event.nativeEvent.contentOffset.y;
-              let scrollDirection = currentOffset > this.state.scrollCurrentOffset ? 1 : 0;
-              let scrollCurrentOffset = currentOffset;
-              this.setState({ scrollDirection, scrollCurrentOffset })
-            }}
-            scrollEventThrottle={0}
-            onScrollEndDrag={() => {
-              if (this.state.scrollDirection === 0) {
-                if (!onSwipeDown) {
-                  !onRequestClose || onRequestClose();
-                } else {
-                  onSwipeDown();
-                }
-              }
-            }}
-            overScrollMode="always"
-            keyboardShouldPersistTaps="always"
-            contentContainerStyle={{
-              width: '100%',
-              alignContent: 'flex-end',
-              alignItems: 'flex-end',
-              flex: 1,
-              flexDirection: 'column',
+      <ModalBottomSheet
+        {...this.props}
+        onConfirm={() => {
+          const value = this.state.value.toString().split(' ').join('');
+          !onConfirm || onConfirm(parseInt(value))
+        }}
+        enableScroll={true}
+        renderContent={() => (
+          <View style={styles.container}>
+            <View style={{
+              flexDirection: 'row',
+              alignSelf: 'center',
+              paddingTop: 15,
+              alignItems: 'center',
+              paddingLeft: 38
             }}>
-            <TouchableWithoutFeedback
-              onPress={() => {
-                if (!onBackgroundPress) {
-                  !onRequestClose || onRequestClose();
-                } else {
-                  onBackgroundPress();
-                }
+              <TouchableOpacity style={styles.modal_datetime_block_container} onPress={() => { }}>
+                <Text style={[styles.modal_datetime_block_text1, { color: '#0377fc' }]}>{this.state.value}</Text>
+              </TouchableOpacity>
+              <TouchableOpacity style={{ paddingVertical: 4, paddingHorizontal: 10 }} onPress={() => {
+                this.setState({ value: '0' })
+                !this.props.onValueChange || this.props.onValueChange('0')
               }}>
-              <View
-                style={{
-                  flex: 1,
-                  width: '100%',
-                  marginTop: Platform.OS === 'ios' ? 0 : 0,
-                  alignContent: 'flex-end',
-                  alignItems: 'flex-end',
-                  flexDirection: 'row',
-                  shadowColor: '#000',
-                  shadowOffset: {
-                    width: 0,
-                    height: 2,
-                  },
-                  shadowOpacity: 0.25,
-                  shadowRadius: 3.84,
-                  elevation: 5,
-                }}>
-                <KeyboardAvoidingView
-                  behavior="position"
-                  enabled
-                  style={{ flex: 1 }}
-                  keyboardVerticalOffset={
-                    Platform.OS === 'android' ? -keyboardHeight : 0
-                  }>
-                  <TouchableWithoutFeedback>
-                    <View style={styles.modal_root}>
-                      <View style={styles.modal_container}>
-                        <TouchableHighlight underlayColor='#ebebeb'>
-                          <View style={styles.modal_header_container}>
-                            <Text
-                              style={styles.modal_text_header}>Choose <Text style={styles.modal_text_header_bold}>"Price"</Text></Text>
-                          </View>
-                        </TouchableHighlight>
-                        <View style={{
-                          flexDirection: 'row',
-                          alignSelf: 'center',
-                          paddingTop: 15,
-                          alignItems: 'center',
-                          paddingLeft: 38
-                        }}>
-                          <TouchableOpacity style={styles.modal_datetime_block_container} onPress={() => { }}>
-                            <Text style={[styles.modal_datetime_block_text1, { color: '#0377fc' }]}>{value}</Text>
-                          </TouchableOpacity>
-                          <TouchableOpacity style={{ paddingVertical: 4, paddingHorizontal: 10 }} onPress={() => !this.props.onValueChange || this.props.onValueChange('0')}>
-                            <Ionicon
-                              name='ios-close-circle'
-                              color='#ababab'
-                              size={18}
-                            />
-                          </TouchableOpacity>
-                        </View>
-                        {keyboard.map((keys, index) => (
-                          <View style={{
-                            flexDirection: 'row',
-                            alignSelf: 'center'
-                          }} key={index}>
-                            {keys.map((key, i) => (
-                              <TouchableOpacity style={styles.modal_datetime_key_container} onPress={() => this.onNumberKeyPress(key.action)} key={key.action}>
-                                <Text style={[styles.modal_datetime_key_text, { fontSize: ['.000', 'ok'].includes(key.action) ? 18 : 23 }]}>{key.value}</Text>
-                              </TouchableOpacity>
-                            ))}
-                          </View>
-                        ))}
-                      </View>
-                      <TouchableOpacity
-                        style={[styles.modal_button, { marginBottom: 1 }]}
-                        onPress={() => {
-                          if (onConfirm) {
-                            const value = this.props.value.toString().split(' ').join('');
-                            onConfirm(parseInt(value));
-                          }
-                          !onRequestClose || onRequestClose();
-                          !this.props.onValueChange || this.props.onValueChange('0');
-                        }}>
-                        <Text style={{ color: '#0377fc', fontSize: 18 }} allowFontScaling={false}>OK</Text>
-                      </TouchableOpacity>
-                      <TouchableOpacity
-                        style={[styles.modal_button]}
-                        onPress={() => {
-                          if (onCancel) {
-                            onCancel();
-                          }
-                          !onRequestClose || onRequestClose();
-                          !this.props.onValueChange || this.props.onValueChange('0');
-                        }}>
-                        <Text style={{ color: '#0377fc', fontSize: 18 }} allowFontScaling={false}>Cancel</Text>
-                      </TouchableOpacity>
-                    </View>
-                  </TouchableWithoutFeedback>
-                </KeyboardAvoidingView>
+                <Ionicon
+                  name='ios-close-circle'
+                  color='#ababab'
+                  size={18}
+                />
+              </TouchableOpacity>
+            </View>
+            {keyboard.map((keys, index) => (
+              <View style={{
+                flexDirection: 'row',
+                alignSelf: 'center'
+              }} key={index}>
+                {keys.map((key, i) => (
+                  <TouchableOpacity style={styles.modal_datetime_key_container} onPress={() => this.onNumberKeyPress(key.action)} key={key.action}>
+                    <Text style={[styles.modal_datetime_key_text, { fontSize: ['.000', 'ok'].includes(key.action) ? 18 : 23 }]}>{key.value}</Text>
+                  </TouchableOpacity>
+                ))}
               </View>
-            </TouchableWithoutFeedback>
-          </ScrollView>
-        </TouchableWithoutFeedback>
-      </Modal>
+            ))}
+          </View>
+        )}
+      />
     )
   }
 }
