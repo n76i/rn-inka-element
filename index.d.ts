@@ -18,12 +18,16 @@ export interface ModalBottomSheetProps {
     /** This function use help this modal can close when click cancel, ok, outside */
     onRequestClose(): void,
     renderHeader?(): React.ReactNode,
-    /** Render content of modal */
+    /** Render content of modal, in case enableScroll and scrollType is not 'ScrollView' renderContent will be disable*/
     renderContent?(): React.ReactNode,
     /** Enable scroll content if higher than screen 
      * @default false
      */
     enableScroll?: boolean,
+    /** Type of content scrollview (when enableScroll = true), maybe FlatList, SectionList or ScrollView */
+    scrollType?: string,
+    /** Custom props of scrollview, you may use this to set data for List and all its props */
+    scrollProps?: object,
     /** Language for multiple language 
      * @field title_thin
      * @field title_bold
@@ -31,6 +35,10 @@ export interface ModalBottomSheetProps {
      * @field button_cancel
      */
     lang: object,
+    /** ScrollView style, custom this style can control alignItems inside Modal (by default is flex-end) */
+    containerStyle: object,
+    /** Custom content shadow (white background) */
+    shadowStyle: object
 }
 
 export class ModalBottomSheet extends React.Component<ModalBottomSheetProps, any> { }
