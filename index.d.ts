@@ -38,7 +38,9 @@ export interface ModalBottomSheetProps {
     /** ScrollView style, custom this style can control alignItems inside Modal (by default is flex-end) */
     containerStyle: object,
     /** Custom content shadow (white background) */
-    shadowStyle: object
+    shadowStyle: object,
+    /** Show input below modal header, usually use to search data on List */
+    enableInput?: boolean,
 }
 
 export class ModalBottomSheet extends React.Component<ModalBottomSheetProps, any> { }

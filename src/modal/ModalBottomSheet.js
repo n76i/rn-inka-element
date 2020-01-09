@@ -17,7 +17,6 @@ import {
   SectionList,
   TextInput
 } from 'react-native';
-import PropTypes from 'prop-types';
 
 const screen_height = Dimensions.get('window').height;
 
@@ -155,12 +154,17 @@ export default class ModalBottomSheet extends Component<Props> {
 
     // Fix scrollview heigh when keyboard show
     let scrollHeigh = screen_height - 170 - fixPaddingTop;
-    if (this.state.is_keyboard_showing) {
+    if (this.state.is_keyboard_showing ) {
       scrollHeigh = this.state.content_height - 70 - keyboardHeight;
     }
     if (!scrollProps.style) {
-      scrollProps.style = { height: scrollHeigh, width: '100%' };
-      scrollProps.containerStyle = { height: scrollHeigh };
+      if (!this.props.enableInput) {
+        scrollProps.style = { maxHeight: scrollHeigh, width: '100%' };
+        scrollProps.containerStyle = { maxHeight: scrollHeigh };
+      } else {
+        scrollProps.style = { height: scrollHeigh, width: '100%' };
+        scrollProps.containerStyle = { height: scrollHeigh };
+      }
     }
     if (enableScroll) {
       switch (scrollType) {
