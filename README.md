@@ -128,6 +128,7 @@ import { ModalBottomSheet } from 'rn-inka-element';
 |enableScroll    | iOS/Android |Enable scroll content if higher than screen |
 |renderContent   | iOS/Android |Render content of modal, in case enableScroll and scrollType is not 'ScrollView' renderContent will be disable|
 |enableInput     | iOS/Android |Show input below modal header, usually use to search data on List |
+|onChangeText    | iOS/Android |Callback when input text change, use for search & filter function |
 |scrollType      | iOS/Android |Type of content scrollview (when enableScroll = true), maybe FlatList, SectionList or ScrollView |
 |scrollProps     | iOS/Android |Custom props of ScrollView/FlatList..., you may use this to set data for List and all its props (include header, items) |
 |lang            | iOS/Android |Use this prop for multiple language|
@@ -153,6 +154,7 @@ import { ModalBottomSheet } from 'rn-inka-element';
   enableScroll={true}
   scrollType='FlatList'
   enableInput={true}
+  onChangeText={text => console.log(text)}
   scrollProps={{
     data: options,
     keyExtractor: (item, index) => index.toString(),
