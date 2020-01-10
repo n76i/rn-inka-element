@@ -149,8 +149,6 @@ import { ModalBottomSheet } from 'rn-inka-element';
     button_ok: 'OK',
     button_cancel: 'Cancel',
   }}
-  value={modal_number_data}
-  onValueChange={value => modal_number_data = value}
   enableScroll={true}
   scrollType='FlatList'
   enableInput={true}
