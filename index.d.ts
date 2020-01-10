@@ -41,6 +41,8 @@ export interface ModalBottomSheetProps {
     shadowStyle: object,
     /** Show input below modal header, usually use to search data on List */
     enableInput?: boolean,
+    /** Callback when input text change, use for search & filter function */
+    onChangeText?(text: string),
 }
 
 export class ModalBottomSheet extends React.Component<ModalBottomSheetProps, any> { }

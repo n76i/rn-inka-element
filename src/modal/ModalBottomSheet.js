@@ -109,6 +109,7 @@ export default class ModalBottomSheet extends Component<Props> {
           }}
           onChangeText={text => {
             this.setState({ text });
+            this.props.onChangeText && this.props.onChangeText(text);
           }}
           autoCapitalize="none"
           autoCompleteType="email"
