@@ -11,6 +11,7 @@ import {
   Modal,
   Keyboard,
   Platform,
+  SafeAreaView,
   KeyboardAvoidingView,
   Dimensions,
   FlatList,
@@ -19,6 +20,7 @@ import {
 } from 'react-native';
 
 const screen_height = Dimensions.get('window').height;
+const screen_width = Dimensions.get('window').width;
 
 export default class ModalBottomSheet extends Component<Props> {
   constructor(props) {
@@ -165,13 +167,18 @@ export default class ModalBottomSheet extends Component<Props> {
     if (this.state.is_keyboard_showing) {
       scrollHeigh = this.state.content_height - 120 - keyboardHeight;
     }
+
+    // SafeAreView not work with Modal, this is a fix height to avoid rabbit ear
+    if (screen_height > 700) {
+      scrollHeigh -= 100;
+    }
     if (!scrollProps.style) {
       if (!this.props.enableInput) {
         scrollProps.style = { maxHeight: scrollHeigh, width: '100%' };
         scrollProps.containerStyle = { maxHeight: scrollHeigh };
       } else {
-        scrollProps.style = { height: scrollHeigh, width: '100%' };
-        scrollProps.containerStyle = { height: scrollHeigh };
+        scrollProps.style = { maxHeight: scrollHeigh, width: '100%' };
+        scrollProps.containerStyle = { maxHeight: scrollHeigh };
       }
     }
     if (enableScroll) {
@@ -255,7 +262,7 @@ export default class ModalBottomSheet extends Component<Props> {
           <KeyboardAvoidingView
             behavior="position"
             enabled={false}
-            style={{ flex: 1 }}
+            style={this.state.is_keyboard_showing ? { flex: 1 } : {}}
             keyboardVerticalOffset={Platform.OS === 'android' ? -keyboardHeight : 0}>
             {content}
           </KeyboardAvoidingView>
@@ -286,31 +293,33 @@ export default class ModalBottomSheet extends Component<Props> {
           transparent={true}
           visible={visible}
           onRequestClose={() => !onRequestClose || onRequestClose()}>
-          <TouchableWithoutFeedback onPress={() => { }}>
-            <View
-              style={[{
-                backgroundColor: '#00000077',
-                width: '100%',
-                alignContent: 'flex-end',
-                alignItems: 'flex-end',
-                flex: 1,
-                flexDirection: 'column',
-                paddingTop: 0
-              }, containerStyle]}>
-              <TouchableWithoutFeedback
-                onPress={() => {
-                  if (!onBackgroundPress) {
-                    !onRequestClose || onRequestClose();
-                  } else {
-                    onBackgroundPress();
-                  }
-                }}>
-                <View style={[styles.shadowStyle, shadowStyle]}>
-                  {avoidView}
-                </View>
-              </TouchableWithoutFeedback>
-            </View>
-          </TouchableWithoutFeedback>
+          <SafeAreaView style={{ flex: 1 }}>
+            <TouchableWithoutFeedback onPress={() => { }}>
+              <View
+                style={[{
+                  backgroundColor: '#00000077',
+                  width: '100%',
+                  alignContent: 'flex-end',
+                  alignItems: 'flex-end',
+                  flex: 1,
+                  flexDirection: 'column',
+                  paddingTop: 0
+                }, containerStyle]}>
+                <TouchableWithoutFeedback
+                  onPress={() => {
+                    if (!onBackgroundPress) {
+                      !onRequestClose || onRequestClose();
+                    } else {
+                      onBackgroundPress();
+                    }
+                  }}>
+                  <View style={[styles.shadowStyle, shadowStyle]}>
+                    {avoidView}
+                  </View>
+                </TouchableWithoutFeedback>
+              </View>
+            </TouchableWithoutFeedback>
+          </SafeAreaView>
         </Modal>
       )
     } else {
@@ -320,73 +329,75 @@ export default class ModalBottomSheet extends Component<Props> {
           transparent={true}
           visible={visible}
           onRequestClose={() => !onRequestClose || onRequestClose()}>
-          <TouchableWithoutFeedback onPress={() => { }}>
-            <ScrollView
-              style={{
-                backgroundColor: '#00000077'
-              }}
-              onScrollBeginDrag={() => {
+          <SafeAreaView style={{ flex: 1 }}>
+            <TouchableWithoutFeedback onPress={() => { }}>
+              <ScrollView
+                style={{
+                  backgroundColor: '#00000077'
+                }}
+                onScrollBeginDrag={() => {
 
-              }}
-              showsVerticalScrollIndicator={false}
-              ref={ref => {
-                !this.state.scrollview || this.setState({ scrollview: ref })
-              }}
-              onScroll={event => {
-                let currentOffset = event.nativeEvent.contentOffset.y;
-                let scrollDirection = currentOffset > this.state.scrollCurrentOffset ? 1 : 0;
-                let scrollCurrentOffset = currentOffset;
-                this.setState({ scrollDirection, scrollCurrentOffset })
-              }}
-              scrollEventThrottle={0}
-              onScrollEndDrag={() => {
-                if (this.state.scrollDirection === 0) {
-                  if (!onSwipeDown) {
-                    !onRequestClose || onRequestClose();
-                  } else {
-                    onSwipeDown();
+                }}
+                showsVerticalScrollIndicator={false}
+                ref={ref => {
+                  !this.state.scrollview || this.setState({ scrollview: ref })
+                }}
+                onScroll={event => {
+                  let currentOffset = event.nativeEvent.contentOffset.y;
+                  let scrollDirection = currentOffset > this.state.scrollCurrentOffset ? 1 : 0;
+                  let scrollCurrentOffset = currentOffset;
+                  this.setState({ scrollDirection, scrollCurrentOffset })
+                }}
+                scrollEventThrottle={0}
+                onScrollEndDrag={() => {
+                  if (this.state.scrollDirection === 0) {
+                    if (!onSwipeDown) {
+                      !onRequestClose || onRequestClose();
+                    } else {
+                      onSwipeDown();
+                    }
                   }
-                }
-              }}
-              overScrollMode="always"
-              keyboardShouldPersistTaps="always"
-              contentContainerStyle={[{
-                width: '100%',
-                alignContent: 'flex-end',
-                alignItems: 'flex-end',
-                flex: 1,
-                flexDirection: 'column',
-                paddingTop: fixPaddingTop
-              }, containerStyle]}>
-              <TouchableWithoutFeedback
-                onPress={() => {
-                  if (!onBackgroundPress) {
-                    !onRequestClose || onRequestClose();
-                  } else {
-                    onBackgroundPress();
-                  }
-                }}>
-                <View
-                  style={[styles.shadowStyle, shadowStyle]}>
-                  <KeyboardAvoidingView
-                    behavior="position"
-                    enabled
-                    style={{ flex: 1 }}
-                    keyboardVerticalOffset={Platform.OS === 'android' ? -keyboardHeight : -50}>
-                    {content}
-                    {onCancel || onConfirm ? (<View style={{
-                      width: '100%',
-                      paddingHorizontal: 15,
-                      paddingBottom: 8,
-                    }}>
-                      {confirmButton}
-                      {cancelButton}
-                    </View>) : null}
-                  </KeyboardAvoidingView>
-                </View>
-              </TouchableWithoutFeedback>
-            </ScrollView>
-          </TouchableWithoutFeedback>
+                }}
+                overScrollMode="always"
+                keyboardShouldPersistTaps="always"
+                contentContainerStyle={[{
+                  width: '100%',
+                  alignContent: 'flex-end',
+                  alignItems: 'flex-end',
+                  flex: 1,
+                  flexDirection: 'column',
+                  paddingTop: fixPaddingTop
+                }, containerStyle]}>
+                <TouchableWithoutFeedback
+                  onPress={() => {
+                    if (!onBackgroundPress) {
+                      !onRequestClose || onRequestClose();
+                    } else {
+                      onBackgroundPress();
+                    }
+                  }}>
+                  <View
+                    style={[styles.shadowStyle, shadowStyle]}>
+                    <KeyboardAvoidingView
+                      behavior="position"
+                      enabled
+                      style={{ flex: 1 }}
+                      keyboardVerticalOffset={Platform.OS === 'android' ? -keyboardHeight : -50}>
+                      {content}
+                      {onCancel || onConfirm ? (<View style={{
+                        width: '100%',
+                        paddingHorizontal: 15,
+                        paddingBottom: 8,
+                      }}>
+                        {confirmButton}
+                        {cancelButton}
+                      </View>) : null}
+                    </KeyboardAvoidingView>
+                  </View>
+                </TouchableWithoutFeedback>
+              </ScrollView>
+            </TouchableWithoutFeedback>
+          </SafeAreaView>
         </Modal>
       )
     }
