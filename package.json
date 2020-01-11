@@ -1,6 +1,6 @@
 {
   "name": "rn-inka-element",
-  "version": "1.0.9",
+  "version": "1.1.0",
   "description": "",
   "main": "index.js",
   "scripts": {
@@ -16,7 +16,7 @@
   "bugs": {
     "url": "https://github.com/n76i/rn-inka-element"
   },
-  "homepage": "https://github.com/n76i/rn-inka-element#readme",
+  "homepage": "n76i.com",
   "email": "unme.rf@gmail.com",
   "author": "Andrew",
   "license": "MIT",

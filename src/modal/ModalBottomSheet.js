@@ -99,7 +99,7 @@ export default class ModalBottomSheet extends Component<Props> {
           style={{
             fontSize: 15,
             flex: 1,
-            paddingVertical: 8,
+            paddingVertical: Platform.OS === 'android' ? 5 : 8,
             paddingHorizontal: 15,
             borderBottomLeftRadius: 15,
             borderBottomRightRadius: 15,
@@ -154,9 +154,16 @@ export default class ModalBottomSheet extends Component<Props> {
     }
 
     // Fix scrollview heigh when keyboard show
-    let scrollHeigh = screen_height - 170 - fixPaddingTop;
-    if (this.state.is_keyboard_showing ) {
-      scrollHeigh = this.state.content_height - 70 - keyboardHeight;
+    let buttonsHeight = 50;
+    if (onCancel) {
+      buttonsHeight += 60;
+    }
+    if (onConfirm) {
+      buttonsHeight += 60;
+    }
+    let scrollHeigh = screen_height - buttonsHeight - fixPaddingTop;
+    if (this.state.is_keyboard_showing) {
+      scrollHeigh = this.state.content_height - 120 - keyboardHeight;
     }
     if (!scrollProps.style) {
       if (!this.props.enableInput) {
@@ -233,15 +240,11 @@ export default class ModalBottomSheet extends Component<Props> {
 
     if (Platform.OS === 'android') {
       let avoidView = (
-        <View style={{ width: '100%' }}>
-          <KeyboardAvoidingView
-            behavior="position"
-            enabled
-            style={{ flex: 1 }}
-            keyboardVerticalOffset={Platform.OS === 'android' ? -keyboardHeight : 0}>
-            {content}
-          </KeyboardAvoidingView>
-          {!this.state.is_keyboard_showing && (onCancel || onConfirm) ? (<View style={{
+        <View style={{
+          width: '100%',
+          flexDirection: 'column-reverse',
+        }}>
+          {(onCancel || onConfirm) ? (<View style={{
             width: '100%',
             paddingHorizontal: 15,
             paddingBottom: 8,
@@ -249,6 +252,13 @@ export default class ModalBottomSheet extends Component<Props> {
             {confirmButton}
             {cancelButton}
           </View>) : null}
+          <KeyboardAvoidingView
+            behavior="position"
+            enabled={false}
+            style={{ flex: 1 }}
+            keyboardVerticalOffset={Platform.OS === 'android' ? -keyboardHeight : 0}>
+            {content}
+          </KeyboardAvoidingView>
         </View>
       );
       if (enableScroll && !['FlatList', 'SectionList'].includes(scrollType)) {
@@ -362,7 +372,7 @@ export default class ModalBottomSheet extends Component<Props> {
                     behavior="position"
                     enabled
                     style={{ flex: 1 }}
-                    keyboardVerticalOffset={Platform.OS === 'android' ? -keyboardHeight : 0}>
+                    keyboardVerticalOffset={Platform.OS === 'android' ? -keyboardHeight : -50}>
                     {content}
                     {onCancel || onConfirm ? (<View style={{
                       width: '100%',
